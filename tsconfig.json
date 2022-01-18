@@ -1,0 +1,121 @@
+{
+    // https://www.typescriptlang.org/tsconfig
+    "compilerOptions": {
+        /**
+         * Type Checking
+        **/
+        // 到達不可能なコードのエラーを報告しない
+        "allowUnreachableCode": false,
+
+        // 使用されていないラベルのエラーを報告しない
+        "allowUnusedLabels": false,
+
+        // switch文でのbreak忘れに対してエラーを報告する
+        "noFallthroughCasesInSwitch": true,
+
+        // 関数内のコードが値を返さない場合に、エラーを報告する
+        "noImplicitReturns": true,
+
+        // 存在が確定していないオブジェクトのプロパティを呼び出す際に、obj['name']の形式にする
+        "noPropertyAccessFromIndexSignature": true,
+
+        // 型に未定義なオブジェクトのプロパティを呼び出した際に、undefinedが追加される
+        "noUncheckedIndexedAccess": true,
+
+        // 使用されていないローカル(変数)があると、エラーを報告する
+        "noUnusedLocals": true,
+
+        // 使用されていないパラメーターがあると、エラーを報告する
+        "noUnusedParameters": true,
+
+        // 各strict設定を有効化する
+        "strict": true,
+
+            // ファイルをECMAScriptのstrictモードで解釈し、各ファイルへ”use strict”を出力する
+            // "alwaysStrict": true,
+
+            // 変数などの使用時に、nullとundefinedかの明示的な判定を必要にする
+            // "strictNullChecks": true,
+
+            // callとbindとapplyが、元となっている関数に対して正しい引数で呼び出されているかチェックする
+            // "strictBindCallApply": true,
+
+            // 関数のパラメータをより正しくチェックする（function構文で記述された関数にのみ適用される）
+            // "strictFunctionTypes": true,
+
+            // Classで宣言されているプロパティをコンストラクターで初期化することを必須にする
+            // "strictPropertyInitialization": true,
+
+            // 式と宣言に暗黙的な'any'があると、エラーを発生させる
+            // "noImplicitAny": true,
+
+            // this式が暗黙的なany型の場合にエラーにする
+            // "noImplicitThis": true,
+
+            // 
+            // "useUnknownInCatchVariables": true,
+
+        /**
+         * Modules
+        **/
+        "module": "commonjs",
+        "rootDir": "./src",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+
+        /**
+         * Emit
+        **/
+        "sourceMap": true,
+        "outDir": "./dist",
+        "importsNotUsedAsValues": "error",
+
+        /**
+         * JavaScript Support
+        **/
+
+        /**
+         * Editor Support
+        **/
+
+        /**
+         * Interop Constraints
+        **/
+        "forceConsistentCasingInFileNames": true,
+
+        /**
+         * Backwards Compatibility
+        **/
+
+        /**
+         * Language and Environment
+        **/
+        "target": "es2021",
+
+        /**
+         * Compiler Diagnostics
+        **/
+
+        /**
+         * Projects
+        **/
+
+        /**
+         * Output Formatting
+        **/
+
+        /**
+         * Completeness
+        **/
+
+        /**
+         * Watch Options
+        **/
+    },
+    "watchOptions": {
+        // 
+    },
+    "typeAcquisition": {
+        // 
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "ts_algorithms_practice",
+  "version": "1.0.0",
+  "description": "[trekhleb/javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)を参考にしながらTSで実装してみる",
+  "main": "index.js",
+  "scripts": {
+    "build": "node ./build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shushuTona/ts_algorithms_practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.14.11",
+    "glob": "^7.2.0",
+    "typescript": "^4.5.4"
+  }
+}
