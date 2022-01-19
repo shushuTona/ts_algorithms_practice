@@ -1,5 +1,6 @@
-type compareFunction = (a: number|string, b: number|string) => number;
-type compareExtendFunction = (a: number|string, b: number|string) => boolean;
+type compareItem = number|string;
+type compareFunction = (a: compareItem, b: compareItem) => number;
+type compareExtendFunction = (a: compareItem, b: compareItem) => boolean;
 
 interface ComparatorClassInterface {
     compare: compareFunction;
@@ -29,7 +30,7 @@ export class Comparator implements ComparatorClassInterface {
      * a > b： 1
      * b > a： -1
      */
-    static defaultCompareFunction(a: number|string, b: number|string): number {
+    static defaultCompareFunction(a: compareItem, b: compareItem): number {
         if(a === b){
             return 0;
         }
@@ -40,35 +41,35 @@ export class Comparator implements ComparatorClassInterface {
     /**
      * 引数aとbが同値かを判定する
      */
-    public equal(a: number|string, b: number|string): boolean {
+    public equal(a: compareItem, b: compareItem): boolean {
         return this.compare(a, b) === 0;
     }
 
     /**
      * 引数aとbを比較して、bの方が大きいかを判定
      */
-    public lessthan(a: number|string, b: number|string): boolean {
+    public lessthan(a: compareItem, b: compareItem): boolean {
         return this.compare(a, b) > 0;
     }
 
     /**
      * 引数aとbを比較して、aの方が大きいかを判定
      */
-    public greaterThan(a: number|string, b: number|string): boolean {
+    public greaterThan(a: compareItem, b: compareItem): boolean {
         return this.compare(a, b) < 0;
     }
 
     /**
      * 引数aとbを比較して、bの方が大きい or aとbが同値かを判定
      */
-    public lessThanOrEqual(a: number|string, b: number|string): boolean {
+    public lessThanOrEqual(a: compareItem, b: compareItem): boolean {
         return this.lessthan(a, b) || this.equal(a, b);
     }
 
     /**
      * 引数aとbを比較して、aの方が大きい or aとbが同値かを判定
      */
-    public greaterThanOrEqual(a: number|string, b: number|string): boolean {
+    public greaterThanOrEqual(a: compareItem, b: compareItem): boolean {
         return this.greaterThan(a, b) || this.equal(a, b);
     }
 
@@ -77,6 +78,6 @@ export class Comparator implements ComparatorClassInterface {
      */
     public reverse(): void {
         const compareOriginal = this.compare;
-        this.compare = (a: number|string, b: number|string) => compareOriginal(b, a);
+        this.compare = (a: compareItem, b: compareItem) => compareOriginal(b, a);
     }
 }
