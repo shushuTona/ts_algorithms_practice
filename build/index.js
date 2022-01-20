@@ -5,9 +5,8 @@ const entryPoints = glob.sync('./src/**/index.ts');
 build({
   entryPoints,
   bundle: true,
-  outfile: 'out.js',
   outbase: './src',
-  outdir: './public' ,
+  outdir: './dist' ,
   platform: 'node',
   watch: false,
 });

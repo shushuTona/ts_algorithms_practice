@@ -19,9 +19,18 @@ export interface ComparatorClassConstructor {
 
 export class Comparator implements ComparatorClassInterface {
     public compare: compareFunction;
+    private argCompareFunction: compareFunction|undefined;
 
-    constructor(compareFunction: compareFunction) {
-        this.compare = compareFunction || Comparator.defaultCompareFunction;
+    constructor(compareFunction?: compareFunction) {
+        this.argCompareFunction = compareFunction;
+        this.initCompareFunction();
+    }
+
+    /**
+     * compareの初期化
+     */
+    public initCompareFunction(): void {
+        this.compare = this.argCompareFunction ? this.argCompareFunction : Comparator.defaultCompareFunction;
     }
 
     /**
@@ -49,14 +58,14 @@ export class Comparator implements ComparatorClassInterface {
      * 引数aとbを比較して、bの方が大きいかを判定
      */
     public lessthan(a: compareItem, b: compareItem): boolean {
-        return this.compare(a, b) > 0;
+        return this.compare(a, b) < 0;
     }
 
     /**
      * 引数aとbを比較して、aの方が大きいかを判定
      */
     public greaterThan(a: compareItem, b: compareItem): boolean {
-        return this.compare(a, b) < 0;
+        return this.compare(a, b) > 0;
     }
 
     /**

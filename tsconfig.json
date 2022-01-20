@@ -44,7 +44,7 @@
             // "strictFunctionTypes": true,
 
             // Classで宣言されているプロパティをコンストラクターで初期化することを必須にする
-            // "strictPropertyInitialization": true,
+            "strictPropertyInitialization": false,
 
             // 式と宣言に暗黙的な'any'があると、エラーを発生させる
             // "noImplicitAny": true,
