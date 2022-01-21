@@ -4,8 +4,10 @@
   "description": "[trekhleb/javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)を参考にしながらTSで実装してみる",
   "main": "index.js",
   "scripts": {
-    "build": "node ./build",
+    "build": "run-s lint:eslint lint:type test esbuild",
+    "esbuild": "node ./build",
     "test": "jest",
+    "lint:type": "tsc --noEmit",
     "lint:eslint": "eslint . --ext ts,tsx",
     "fix:eslint": "eslint . --ext ts,tsx --fix"
   },
@@ -24,6 +26,7 @@
     "eslint-plugin-import": "^2.25.4",
     "glob": "^7.2.0",
     "jest": "^27.4.7",
+    "npm-run-all": "^4.1.5",
     "ts-jest": "^27.1.3",
     "typescript": "^4.5.4"
   }

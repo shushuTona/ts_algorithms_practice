@@ -9,4 +9,5 @@ build({
   outdir: './dist' ,
   platform: 'node',
   watch: false,
+  minify: true,
 });
