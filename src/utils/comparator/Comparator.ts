@@ -10,7 +10,7 @@ interface ComparatorClassInterface {
     lessThanOrEqual: compareExtendFunction;
     greaterThanOrEqual: compareExtendFunction;
     reverse(): void;
-};
+}
 
 export interface ComparatorClassConstructor {
     new (): ComparatorClassInterface
@@ -19,6 +19,7 @@ export interface ComparatorClassConstructor {
 
 export class Comparator implements ComparatorClassInterface {
     public compare: compareFunction;
+
     private argCompareFunction: compareFunction|undefined;
 
     constructor(compareFunction?: compareFunction) {
@@ -30,7 +31,9 @@ export class Comparator implements ComparatorClassInterface {
      * compareの初期化
      */
     public initCompareFunction(): void {
-        this.compare = this.argCompareFunction ? this.argCompareFunction : Comparator.defaultCompareFunction;
+        this.compare = this.argCompareFunction
+            ? this.argCompareFunction
+            : Comparator.defaultCompareFunction;
     }
 
     /**
