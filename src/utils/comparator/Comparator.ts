@@ -1,4 +1,4 @@
-type compareItem = number|string;
+export type compareItem = number|string;
 type compareFunction = (a: compareItem, b: compareItem) => number;
 type compareExtendFunction = (a: compareItem, b: compareItem) => boolean;
 
@@ -10,11 +10,6 @@ interface ComparatorClassInterface {
     lessThanOrEqual: compareExtendFunction;
     greaterThanOrEqual: compareExtendFunction;
     reverse(): void;
-}
-
-export interface ComparatorClassConstructor {
-    new (): ComparatorClassInterface
-    defaultCompareFunction: compareFunction
 }
 
 export class Comparator implements ComparatorClassInterface {
