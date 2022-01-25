@@ -1,23 +1,10 @@
-export type compareItem = number|string;
-type compareFunction = (a: compareItem, b: compareItem) => number;
-type compareExtendFunction = (a: compareItem, b: compareItem) => boolean;
+export type compareFunction<T>= (a: T, b: T) => number;
 
-interface ComparatorClassInterface {
-    compare: compareFunction;
-    equal: compareExtendFunction;
-    lessthan: compareExtendFunction;
-    greaterThan: compareExtendFunction;
-    lessThanOrEqual: compareExtendFunction;
-    greaterThanOrEqual: compareExtendFunction;
-    reverse(): void;
-}
+export class Comparator<T> {
+    public compare: compareFunction<T>;
+    private argCompareFunction: compareFunction<T>|undefined;
 
-export class Comparator implements ComparatorClassInterface {
-    public compare: compareFunction;
-
-    private argCompareFunction: compareFunction|undefined;
-
-    constructor(compareFunction?: compareFunction) {
+    constructor(compareFunction?: compareFunction<T>|undefined) {
         this.argCompareFunction = compareFunction;
         this.initCompareFunction();
     }
@@ -28,7 +15,7 @@ export class Comparator implements ComparatorClassInterface {
     public initCompareFunction(): void {
         this.compare = this.argCompareFunction
             ? this.argCompareFunction
-            : Comparator.defaultCompareFunction;
+            : this.defaultCompareFunction;
     }
 
     /**
@@ -37,7 +24,7 @@ export class Comparator implements ComparatorClassInterface {
      * a > b： 1
      * b > a： -1
      */
-    static defaultCompareFunction(a: compareItem, b: compareItem): number {
+    public defaultCompareFunction(a: T, b: T): number {
         if(a === b){
             return 0;
         }
@@ -48,35 +35,35 @@ export class Comparator implements ComparatorClassInterface {
     /**
      * 引数aとbが同値かを判定する
      */
-    public equal(a: compareItem, b: compareItem): boolean {
+    public equal(a: T, b: T): boolean {
         return this.compare(a, b) === 0;
     }
 
     /**
      * 引数aとbを比較して、bの方が大きいかを判定
      */
-    public lessthan(a: compareItem, b: compareItem): boolean {
+    public lessthan(a: T, b: T): boolean {
         return this.compare(a, b) < 0;
     }
 
     /**
      * 引数aとbを比較して、aの方が大きいかを判定
      */
-    public greaterThan(a: compareItem, b: compareItem): boolean {
+    public greaterThan(a: T, b: T): boolean {
         return this.compare(a, b) > 0;
     }
 
     /**
      * 引数aとbを比較して、bの方が大きい or aとbが同値かを判定
      */
-    public lessThanOrEqual(a: compareItem, b: compareItem): boolean {
+    public lessThanOrEqual(a: T, b: T): boolean {
         return this.lessthan(a, b) || this.equal(a, b);
     }
 
     /**
      * 引数aとbを比較して、aの方が大きい or aとbが同値かを判定
      */
-    public greaterThanOrEqual(a: compareItem, b: compareItem): boolean {
+    public greaterThanOrEqual(a: T, b: T): boolean {
         return this.greaterThan(a, b) || this.equal(a, b);
     }
 
@@ -85,6 +72,6 @@ export class Comparator implements ComparatorClassInterface {
      */
     public reverse(): void {
         const compareOriginal = this.compare;
-        this.compare = (a: compareItem, b: compareItem) => compareOriginal(b, a);
+        this.compare = (a: T, b: T) => compareOriginal(b, a);
     }
 }
