@@ -6,7 +6,8 @@
   "scripts": {
     "build": "run-s lint:eslint lint:type test esbuild",
     "esbuild": "node ./build",
-    "test": "jest",
+    "test:all": "jest",
+    "test:part": "jest -o",
     "lint:type": "tsc --noEmit",
     "lint:eslint": "eslint . --ext ts,tsx",
     "fix:eslint": "eslint . --ext ts,tsx --fix"
