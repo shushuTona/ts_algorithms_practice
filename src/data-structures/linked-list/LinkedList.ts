@@ -1,8 +1,12 @@
 import { LinkedListNode } from './LinkedListNode';
 import { Comparator, compareFunction } from '../../utils/comparator/Comparator';
 
-export class LinkedList {
-    constructor(comparatorFunction: compareFunction){
+export class LinkedList<T> {
+    public head: LinkedListNode<T>|null;
+    public tail: LinkedListNode<T>|null;
+    private compare: Comparator<T>;
+
+    constructor(comparatorFunction?: compareFunction<T>){
         this.head = null;
         this.tail = null;
         this.compare = new Comparator(comparatorFunction);
@@ -15,8 +19,8 @@ export class LinkedList {
      * @param {*} value 
      * @returns {LinkedList}
      */
-    prepend(value) {
-        const newNode = new LinkedListNode(value, this.head);
+    prepend(value: T): LinkedList<T> {
+        const newNode = new LinkedListNode<T>(value, this.head);
         this.head = newNode;
 
         if(!this.tail){
@@ -32,7 +36,7 @@ export class LinkedList {
      * @param {*} value
      * @returns {LinkedList}
      */
-    append(value) {
+    append(value: T): LinkedList<T> {
         const newNode = new LinkedListNode(value);
 
         // headがnull = まだ何も値が設定されていない場合
@@ -44,8 +48,58 @@ export class LinkedList {
         }
 
         // ▼▼▼▼▼ this.headに値が設定されている場合 ▼▼▼▼▼
-        this.tail!.next = newNode;
+        if(this.tail){
+            this.tail.next = newNode;
+        }
         this.tail = newNode;
+
+        return this;
+    }
+
+    /**
+     * 指定のindex位置に値を設定する
+     *
+     * @param {*} value 
+     * @param {number} rawIndex 
+     * @returns {LinkedList}
+     */
+    insert(value: T, rawIndex: number): LinkedList<T> {
+        const index = rawIndex < 0 ? 0 : rawIndex;
+
+        if(index === 0){
+            this.prepend(value);
+        } else {
+            let count = 1;
+            let currentNode = this.head;
+            const newNode = new LinkedListNode<T>(value);
+
+            // indexに対応したcurrentNodeの値を設定する
+            while(currentNode){
+                if(index === count) break;
+
+                currentNode = currentNode.next;
+                count += 1;
+            }
+
+            if(currentNode){
+                // 下記の状態に設定する
+                // currentNode [ここにnewNode] currentNode.next
+                newNode.next = currentNode.next;
+                currentNode.next = newNode;
+            } else {
+                // currentNodeが無い＝最後尾の場合
+
+                if(this.tail){
+                    // 既に最後尾のNodeが設定されている場合
+                    this.tail.next = newNode;
+                    this.tail = newNode;
+                } else {
+                    // currentNode（this.head）とthis.tailがそれぞれ設定されていない
+                    this.head = newNode;
+                    this.tail = newNode;
+                }
+            }
+        }
 
         return this;
     }
@@ -54,15 +108,15 @@ export class LinkedList {
      * 対象の値を一覧から削除する
      *
      * @param {*} value 
-     * @returns LinkedList|null
+     * @returns LinkedListNode|null
      */
-    delete(value) {
+    delete(value: T): LinkedListNode<T>|null {
         // まだ値が設定されていない場合
         if(!this.head){
             return null;
         }
 
-        let deleteNode: LinkedListNode|null = null;
+        let deleteNode: LinkedListNode<T>|null = null;
 
         while(
             this.head &&
@@ -88,22 +142,30 @@ export class LinkedList {
         }
 
         // tailの値が指定の値と一致する場合
-        if(this.compare.equal(this.tail.value, value)){
+        if(
+            this.tail &&
+            this.compare.equal(this.tail.value, value)
+        ){
             this.tail = currentNode;
         }
 
         return deleteNode;
     }
 
-    public find( {
-        value = undefined,
-        callback = undefined,
-    }) {
+    /**
+     * 
+     *
+     * @param findObj
+     * @returns 
+     */
+    public find(findObj: { value?: T, callback?: (value: T) => T }) {
         if(!this.head){
             return null;
         }
 
         let currentNode = this.head;
+        const value = findObj.value ? findObj.value : undefined;
+        const callback = findObj.callback ? findObj.callback : undefined;
 
         while(currentNode){
             if(
@@ -120,13 +182,20 @@ export class LinkedList {
                 return currentNode;
             }
 
-            currentNode = currentNode.next;
+            if(currentNode.next){
+                currentNode = currentNode.next;
+            }
         }
 
         // どの要素も一致しなかった場合
         return null;
     }
 
+    /**
+     * 
+     *
+     * @returns 
+     */
     public deleteTail() {
         const deletedTail = this.tail;
 
@@ -138,7 +207,7 @@ export class LinkedList {
         }
 
         let currentNode = this.head;
-        while(currentNode.next){
+        while(currentNode?.next){
             if(!currentNode?.next.next){
                 currentNode.next = null;
             } else {
@@ -151,6 +220,11 @@ export class LinkedList {
         return deletedTail;
     }
 
+    /**
+     * 
+     *
+     * @returns 
+     */
     public deleteHead() {
         if(!this.head){
             return null;
@@ -168,7 +242,7 @@ export class LinkedList {
         return deletedHead;
     }
 
-    public fromArray(values) {
+    public fromArray(values: T[]) {
         values.forEach((value) => {
             this.append(value);
         });
@@ -176,8 +250,13 @@ export class LinkedList {
         return this;
     }
 
-    public toArray() {
-        const nodes = [];
+    /**
+     * 
+     *
+     * @returns LinkedListNode<T>[]
+     */
+    public toArray(): LinkedListNode<T>[] {
+        const nodes: LinkedListNode<T>[] = [];
 
         let currentNode = this.head;
         while(currentNode){
@@ -188,13 +267,23 @@ export class LinkedList {
         return nodes;
     }
 
-    public toString(callback) {
-        return this.toArray.map((node) => {
+    /**
+     * 
+     * @param callback 
+     * @returns string
+     */
+    public toString(callback?: (value: T) => string): string {
+        return this.toArray().map((node: LinkedListNode<T>) => {
             return node.toString(callback);
         }).toString();
     }
 
-    public reverse() {
+    /**
+     * 
+     *
+     * @returns void
+     */
+    public reverse(): void {
         let currentNode = this.head;
         let prevNode = null;
         let nextNode = null;
