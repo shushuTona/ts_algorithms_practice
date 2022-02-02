@@ -19,7 +19,7 @@ export class LinkedList<T> {
      * @param {*} value 
      * @returns {LinkedList}
      */
-    prepend(value: T): LinkedList<T> {
+    public prepend(value: T): LinkedList<T> {
         const newNode = new LinkedListNode<T>(value, this.head);
         this.head = newNode;
 
@@ -36,7 +36,7 @@ export class LinkedList<T> {
      * @param {*} value
      * @returns {LinkedList}
      */
-    append(value: T): LinkedList<T> {
+    public append(value: T): LinkedList<T> {
         const newNode = new LinkedListNode(value);
 
         // headがnull = まだ何も値が設定されていない場合
@@ -63,7 +63,7 @@ export class LinkedList<T> {
      * @param {number} rawIndex 
      * @returns {LinkedList}
      */
-    insert(value: T, rawIndex: number): LinkedList<T> {
+    public insert(value: T, rawIndex: number): LinkedList<T> {
         const index = rawIndex < 0 ? 0 : rawIndex;
 
         if(index === 0){
@@ -110,7 +110,7 @@ export class LinkedList<T> {
      * @param {*} value 
      * @returns LinkedListNode|null
      */
-    delete(value: T): LinkedListNode<T>|null {
+    public delete(value: T): LinkedListNode<T>|null {
         // まだ値が設定されていない場合
         if(!this.head){
             return null;
@@ -156,9 +156,9 @@ export class LinkedList<T> {
      * 
      *
      * @param findObj
-     * @returns 
+     * @returns LinkedListNode|null
      */
-    public find(findObj: { value?: T, callback?: (value: T) => T }) {
+    public find(findObj: { value?: T, callback?: (value: T) => T }): LinkedListNode<T>|null {
         if(!this.head){
             return null;
         }
@@ -196,7 +196,7 @@ export class LinkedList<T> {
      *
      * @returns 
      */
-    public deleteTail() {
+    public deleteTail(): typeof this.tail {
         const deletedTail = this.tail;
 
         if(this.head === this.tail){
@@ -225,7 +225,7 @@ export class LinkedList<T> {
      *
      * @returns 
      */
-    public deleteHead() {
+    public deleteHead(): typeof this.head {
         if(!this.head){
             return null;
         }
@@ -242,7 +242,12 @@ export class LinkedList<T> {
         return deletedHead;
     }
 
-    public fromArray(values: T[]) {
+    /**
+     * 
+     *
+     * @returns 
+     */
+    public fromArray(values: T[]): LinkedList<T> {
         values.forEach((value) => {
             this.append(value);
         });
