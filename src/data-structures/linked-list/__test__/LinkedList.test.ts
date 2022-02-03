@@ -226,6 +226,17 @@ describe('LinkedList Object node test', () => {
         name: string,
     }
 
+    const compareFunction = (a: testObj, b: testObj): number => {
+        if(
+            a.id === b.id &&
+            a.name === b.name
+        ){
+            return 0;
+        }
+
+        return a.id < b.id ? -1 : 1;
+    };
+
     const callback = (value: testObj) => {
         return `${value.id}:${value.name}`;
     };
@@ -242,5 +253,128 @@ describe('LinkedList Object node test', () => {
         expect(linkedList.tail?.value.name).toBe('test1');
         expect(linkedList.toString(callback)).toBe('2:test2,1:test1');
         expect(linkedList.tail?.next).toBeNull();
+    });
+
+    it('append node', () => {
+        const linkedList = new LinkedList<testObj>();
+
+        linkedList.append({id: 1, name: 'test1'});
+        linkedList.append({id: 2, name: 'test2'});
+
+        expect(linkedList.head?.value.id).toBe(1);
+        expect(linkedList.head?.value.name).toBe('test1');
+        expect(linkedList.tail?.value.id).toBe(2);
+        expect(linkedList.tail?.value.name).toBe('test2');
+        expect(linkedList.toString(callback)).toBe('1:test1,2:test2');
+        expect(linkedList.tail?.next).toBeNull();
+    });
+
+    it('insert node', () => {
+        const linkedList = new LinkedList<testObj>();
+
+        linkedList.insert({id: 1, name: 'test1'}, 3);
+        expect(linkedList.head?.value.id).toBe(1);
+        expect(linkedList.tail?.value.name).toBe('test1');
+        
+        linkedList.insert({id: 2, name: 'test2'}, 3);
+        linkedList.insert({id: 3, name: 'test3'}, 3);
+        linkedList.insert({id: 4, name: 'test4'}, -1);
+        expect(linkedList.toString(callback)).toBe('4:test4,1:test1,2:test2,3:test3');
+    });
+
+    it('delete node', () => {
+        const linkedList = new LinkedList<testObj>(compareFunction);
+
+        linkedList.prepend({id: 1, name: 'test1'});
+        linkedList.prepend({id: 2, name: 'test2'});
+        linkedList.prepend({id: 3, name: 'test3'});
+        linkedList.prepend({id: 4, name: 'test4'});
+        linkedList.prepend({id: 1, name: 'test1'});
+        expect(linkedList.toString(callback)).toBe('1:test1,4:test4,3:test3,2:test2,1:test1');
+        
+        linkedList.delete({id: 1, name: 'test1'});     
+        expect(linkedList.toString(callback)).toBe('4:test4,3:test3,2:test2');
+        expect(linkedList.head?.value.id).toBe(4);
+        expect(linkedList.tail?.value.id).toBe(2);
+        
+        // not delete so name is 'test1'.
+        linkedList.delete({id: 2, name: 'test1'});
+        expect(linkedList.toString(callback)).toBe('4:test4,3:test3,2:test2');
+        expect(linkedList.head?.value.id).toBe(4);
+        expect(linkedList.tail?.value.id).toBe(2);
+
+        linkedList.delete({id: 2, name: 'test2'});
+        expect(linkedList.toString(callback)).toBe('4:test4,3:test3');
+        expect(linkedList.head?.value.id).toBe(4);
+        expect(linkedList.tail?.value.id).toBe(3);
+
+        linkedList.delete({id: 3, name: 'test3'});
+        expect(linkedList.toString(callback)).toBe('4:test4');
+        expect(linkedList.head?.value.id).toBe(4);
+        expect(linkedList.tail?.value.id).toBe(4);
+
+        linkedList.delete({id: 4, name: 'test4'});
+        expect(linkedList.toString(callback)).toBe('');
+        expect(linkedList.head).toBeNull();
+        expect(linkedList.tail).toBeNull();
+    });
+
+    it('find node', () => {
+        const linkedList = new LinkedList<testObj>(compareFunction);
+
+        expect(linkedList.find({
+            value: {
+                id: 1,
+                name: 'test1'
+            }
+        })).toBeNull();
+
+        linkedList.append({id: 1, name: 'test1'});
+        expect(linkedList.find({
+            value: {
+                id: 1,
+                name: 'test1'
+            }
+        })).toBeDefined();
+        
+        linkedList.append({id: 2, name: 'test2'});
+        linkedList.append({id: 3, name: 'test3'});
+        
+        const node = linkedList.find({
+            value: {
+                id: 2,
+                name: 'test2'
+            }
+        });
+        expect(node?.value.id).toBe(2);
+    });
+
+    it('node fromArray', () => {
+        const linkedList = new LinkedList<testObj>(compareFunction);
+
+        linkedList.fromArray([
+            {id: 1, name: 'test1'},
+            {id: 2, name: 'test2'},
+            {id: 3, name: 'test3'},
+            {id: 4, name: 'test4'},
+            {id: 5, name: 'test5'},
+        ]);
+
+        expect(linkedList.head?.value.id).toBe(1);
+        expect(linkedList.tail?.value.id).toBe(5);
+        expect(linkedList.toString(callback)).toBe('1:test1,2:test2,3:test3,4:test4,5:test5');
+    });
+
+    it('node toArray', () => {
+        const linkedList = new LinkedList<testObj>(compareFunction);
+
+        linkedList.append({id: 1, name: 'test1'});
+        linkedList.append({id: 2, name: 'test2'});
+        linkedList.append({id: 3, name: 'test3'});
+
+        expect(linkedList.toArray().length).toBe(3);
+        expect(linkedList.toArray()[0]?.value.id).toBe(1);
+        expect(linkedList.toArray()[1]?.value.id).toBe(2);
+        expect(linkedList.toArray()[2]?.value.id).toBe(3);
     });
 });

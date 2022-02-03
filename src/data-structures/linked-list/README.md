@@ -9,3 +9,16 @@ https://github.com/trekhleb/javascript-algorithms/tree/master/src/data-structure
     - `value`プロパティ
     - `next`プロパティに設定するLinkedListNodeの引数のvalue
     - `toString`メソッドのcallback関数の引数value
+
+### LinkedList
+- prepend
+- append
+- insert
+- delete
+- find
+- deleteTail
+- deleteHead
+- fromArray
+- toArray
+- toString
+- reverse
