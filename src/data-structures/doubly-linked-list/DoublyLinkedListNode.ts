@@ -15,7 +15,7 @@ export class DoublyLinkedListNode<T> {
         this.previous = previous;
     }
 
-    public toString(callback: toStringCallbackType<T>){
+    public toString(callback: toStringCallbackType<T>|null = null){
         return callback ? callback(this.value) : `${this.value}`;
     }
 }
