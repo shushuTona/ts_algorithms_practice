@@ -2,12 +2,11 @@
 
 ## memo
 
-### XXX
-- 
-- 
-- 
+### DoublyLinkedListNode
+- 基本は`LinkedListNode`と同じ
+- メンバー変数として`previous`と`next`を持つことで、前後関係を設定することができる
 
-### XXX
+### DoublyLinkedList
 - 
 - 
 - 
