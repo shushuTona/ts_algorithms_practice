@@ -1,4 +1,7 @@
-import { DoublyLinkedListNode, toStringCallbackType } from '../DoublyLinkedListNode';
+import {
+    DoublyLinkedListNode,
+    toStringCallbackType
+} from '@/data-structures/doubly-linked-list/DoublyLinkedListNode';
 
 describe('DoublyLinkedListNode test', () => {
     it('create node', () => {

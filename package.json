@@ -4,7 +4,7 @@
   "description": "[trekhleb/javascript-algorithms](https://github.com/trekhleb/javascript-algorithms)を参考にしながらTSで実装してみる",
   "main": "index.js",
   "scripts": {
-    "build": "run-s lint:eslint lint:type test esbuild",
+    "build": "run-s lint:eslint lint:type test:all esbuild",
     "esbuild": "node ./build",
     "test:all": "jest",
     "test:part": "jest -o",
@@ -23,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "esbuild": "^0.14.11",
+    "esbuild-plugin-alias": "^0.2.1",
     "eslint": "^8.7.0",
     "eslint-plugin-import": "^2.25.4",
     "glob": "^7.2.0",

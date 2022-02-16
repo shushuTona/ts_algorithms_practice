@@ -1,5 +1,5 @@
-import { LinkedListNode } from './LinkedListNode';
-import { Comparator, compareFunction } from '../../utils/comparator/Comparator';
+import { LinkedListNode } from '@/data-structures/linked-list/LinkedListNode';
+import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
 export class LinkedList<T> {
     public head: LinkedListNode<T>|null;

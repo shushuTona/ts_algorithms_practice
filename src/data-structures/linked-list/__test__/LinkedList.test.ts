@@ -1,4 +1,4 @@
-import { LinkedList } from '../LinkedList';
+import { LinkedList } from '@/data-structures/linked-list/LinkedList';
 
 describe('LinkedList Number node Test', () => {
     it('create empty linkedList', () => {

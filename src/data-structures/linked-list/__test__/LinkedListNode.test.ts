@@ -1,4 +1,7 @@
-import { LinkedListNode, toStringCallbackType } from '../LinkedListNode';
+import {
+    LinkedListNode,
+    toStringCallbackType
+} from '@/data-structures/linked-list/LinkedListNode';
 
 describe('LinkedListNode Test', () => {
     it('create node', () => {

@@ -55,6 +55,11 @@
             // 
             // "useUnknownInCatchVariables": true,
 
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+
         /**
          * Modules
         **/
