@@ -1,14 +1,15 @@
 export type toStringCallbackType<T> = (value: T) => string;
+export type doublyLinkedListNodeType<T> = DoublyLinkedListNode<T>|null;
 
 export class DoublyLinkedListNode<T> {
     public value: T;
-    public next: DoublyLinkedListNode<T>|null;
-    public previous: DoublyLinkedListNode<T>|null;
+    public next: doublyLinkedListNodeType<T>;
+    public previous: doublyLinkedListNodeType<T>;
 
     constructor(
         value: T,
-        next: DoublyLinkedListNode<T>|null = null,
-        previous: DoublyLinkedListNode<T>|null = null
+        next: doublyLinkedListNodeType<T> = null,
+        previous: doublyLinkedListNodeType<T> = null
     ){
         this.value = value;
         this.next = next;
