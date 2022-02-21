@@ -1,4 +1,4 @@
-import { LinkedListNode } from '@/data-structures/linked-list/LinkedListNode';
+import { LinkedListNode, toStringCallbackType } from '@/data-structures/linked-list/LinkedListNode';
 import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
 export class LinkedList<T> {
@@ -277,7 +277,7 @@ export class LinkedList<T> {
      * @param callback 
      * @returns string
      */
-    public toString(callback?: (value: T) => string): string {
+    public toString(callback?: toStringCallbackType<T>): string {
         return this.toArray().map((node: LinkedListNode<T>) => {
             return node.toString(callback);
         }).toString();

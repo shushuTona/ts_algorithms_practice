@@ -9,7 +9,7 @@ export class LinkedListNode<T> {
         this.next = next;
     }
 
-    toString(callback?: toStringCallbackType<T>) {
+    toString(callback?: toStringCallbackType<T>): string {
         return callback ? callback(this.value) : `${this.value}`;
     }
 }
