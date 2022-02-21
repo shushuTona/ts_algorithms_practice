@@ -1,4 +1,8 @@
-import { DoublyLinkedListNode, doublyLinkedListNodeType } from '@/data-structures/doubly-linked-list/DoublyLinkedListNode';
+import {
+    DoublyLinkedListNode,
+    doublyLinkedListNodeType,
+    toStringCallbackType
+} from '@/data-structures/doubly-linked-list/DoublyLinkedListNode';
 import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
 export class DoublyLinkedList<T> {
@@ -121,7 +125,12 @@ export class DoublyLinkedList<T> {
         return deletedNode;
     }
 
-    public find(findObj: {value: T, callback?: (value: T) => boolean }){
+    /**
+     * find
+     *
+     * 引数のオブジェクトを基に一覧のNodeを検索する
+     */
+    public find(findObj: {value: T, callback?: (value: T) => boolean }): doublyLinkedListNodeType<T> {
         if(!this.head){
             return null;
         }
@@ -148,5 +157,127 @@ export class DoublyLinkedList<T> {
         }
 
         return null;
+    }
+
+    /**
+     * deleteTail
+     *
+     * 最後尾のNodeを削除する 
+     */
+    public deleteTail(): doublyLinkedListNodeType<T> {
+        if(!this.tail){
+            return null;
+        }
+
+        // 先頭と最後尾のNodeが同じ（＝一覧にNodeが1つしかない時）
+        if(
+            this.head === this.tail
+        ) {
+            const deletedNode = this.tail;
+            this.head = null;
+            this.tail = null;
+
+            return deletedNode;
+        }
+
+        // 最後尾の1つ前のNodeを最後尾に設定する
+        const deletedNode = this.tail;
+        this.tail = this.tail.previous;
+        this.tail && (this.tail.next = null);
+
+        return deletedNode;
+    }
+
+    /**
+     * deleteHead
+     *
+     * 先頭のNodeを削除する
+     */
+    public deleteHead(): doublyLinkedListNodeType<T> {
+        if(!this.head){
+            return null;
+        }
+
+        const deletedNode = this.head;
+
+        if(
+            this.head.next
+        ) {
+            this.head = this.head.next;
+            this.head.previous = null;
+        } else {
+            this.head = null;
+            this.tail = null;
+        }
+
+        return deletedNode;
+    }
+
+    /**
+     * toArray
+     *
+     * Nodeの一覧を配列として生成する
+     */
+    public toArray(): DoublyLinkedListNode<T>[] {
+        const nodes: DoublyLinkedListNode<T>[] = [];
+        let currentNode = this.head;
+
+        while(currentNode){
+            nodes.push(currentNode);
+            currentNode = currentNode.next;
+        }
+
+        return nodes;
+    }
+
+    /**
+     * fromArray
+     *
+     * 配列を基に一覧の最後尾にNodeを追加する
+     */
+    public fromArray(values: T[]): DoublyLinkedList<T> {
+        values.forEach((value) => {
+            this.append(value);
+        });
+
+        return this;
+    }
+
+    /**
+     * toString
+     *
+     * Node一覧を基に文字列を生成する
+     */
+    public toString(callback?: toStringCallbackType<T>): string {
+        return this.toArray().map((node) => {
+            node.toString(callback);
+        }).toString();
+    }
+
+    /**
+     * reverse
+     *
+     * Node一覧の並びを反対にする
+     */
+    public reverse(): DoublyLinkedList<T> {
+        let currentNode = this.head;
+        let prevNode = null;
+        let nextNode = null;
+
+        while(currentNode){
+            nextNode = currentNode.next;
+            prevNode = currentNode.previous;
+
+            currentNode.next = prevNode;
+            currentNode.previous = nextNode;
+
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+
+        this.tail = this.head;
+        this.head = prevNode;
+
+        return this;
     }
 }
