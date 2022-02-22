@@ -250,7 +250,7 @@ export class DoublyLinkedList<T> {
      */
     public toString(callback?: toStringCallbackType<T>): string {
         return this.toArray().map((node) => {
-            node.toString(callback);
+            return node.toString(callback);
         }).toString();
     }
 
