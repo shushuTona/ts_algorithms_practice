@@ -14,8 +14,42 @@ describe('Queue test', () => {
     });
 
     it('empty queue', () => {
-        const queue = new Queue<number>();
+        expect(queue.isEmpty()).toBeTruthy();
+        
+        queue.enqueue(1);
 
+        expect(queue.isEmpty()).toBeFalsy();
+    });
+
+    it('enqueue queue', () => {
+        expect(queue.isEmpty()).toBeTruthy();
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        expect(queue.toString()).toBe('1,2,3');
+    });
+
+    it('queue peek', () => {
+        expect(queue.peek()).toBeNull();
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        expect(queue.peek()).toBe(1);
+    });
+
+    it('dequeue queue', () => {
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        expect(queue.dequeue()).toBe(1);
+        expect(queue.dequeue()).toBe(2);
+        expect(queue.dequeue()).toBe(3);
+        expect(queue.dequeue()).toBeNull();
         expect(queue.isEmpty()).toBeTruthy();
     });
 });
