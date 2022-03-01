@@ -29,13 +29,7 @@ export class Queue<T> {
             return null;
         }
 
-        if(
-            this.linkedList.head
-        ) {
-            return this.linkedList.head.value;
-        } else {
-            return null;
-        }
+        return this.linkedList.head ? this.linkedList.head.value : null;
     }
 
     /**
