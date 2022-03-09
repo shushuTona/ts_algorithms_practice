@@ -6,12 +6,17 @@ interface HashTableKeys {
     [key: string]: number
 }
 
+interface HashTableLinkedListNode<T> {
+    key: string,
+    value: T
+}
+
 export class HashTable<T> {
-    public buckets: LinkedList<T>[];
+    public buckets: LinkedList<HashTableLinkedListNode<T>>[];
     public keys: HashTableKeys;
 
     constructor(hashTableSize = defaultHashTableSize) {
-        this.buckets = Array(hashTableSize).fill(null).map(() => new LinkedList<T>());
+        this.buckets = Array(hashTableSize).fill(null).map(() => new LinkedList<HashTableLinkedListNode<T>>());
         this.keys = {};
     }
 
@@ -31,5 +36,37 @@ export class HashTable<T> {
 
         // hashの値をthis.bucketsの要素数で割った余り値を返す
         return hash % this.buckets.length;
+    }
+
+    /**
+     * set
+     *
+     * 
+     */
+    public set(key: string, value: T): void {
+        const keyHash = this.hash(key);
+        this.keys[key] = keyHash;
+        const bucketLinkedList = this.buckets[keyHash];
+
+        if(bucketLinkedList){
+            const node = bucketLinkedList.find({ callback: (nodeValue) => nodeValue.key === key });
+
+            if(
+                !node
+            ) {
+                bucketLinkedList.append({ key, value });
+            } else {
+                node.value.value = value;
+            }
+        }
+    }
+
+    /**
+     * has
+     *
+     * 
+     */
+    public has(key: string) {
+        return Object.hasOwnProperty.call(this.keys, key);
     }
 }

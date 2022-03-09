@@ -10,11 +10,28 @@ describe('HashTable test', () => {
     });
 
     it('create hash', () => {
-        const hash = new HashTable<number>();
+        const hashTable = new HashTable<number>();
 
-        expect(hash.hash('a')).toBe(1);
-        expect(hash.hash('b')).toBe(2);
-        expect(hash.hash('c')).toBe(3);
-        expect(hash.hash('abc')).toBe(6);
+        expect(hashTable.hash('a')).toBe(1);
+        expect(hashTable.hash('b')).toBe(2);
+        expect(hashTable.hash('c')).toBe(3);
+        expect(hashTable.hash('abc')).toBe(6);
+    });
+
+    it('check set', () => {
+        const hashTable = new HashTable<string>(3);
+
+        expect(hashTable.hash('a')).toBe(1);
+        expect(hashTable.hash('b')).toBe(2);
+        expect(hashTable.hash('c')).toBe(0);
+        expect(hashTable.hash('d')).toBe(1);
+
+        hashTable.set('a', 'test_value_a');
+        hashTable.set('b', 'test_value_b');
+        hashTable.set('c', 'test_value_c');
+        hashTable.set('d', 'test_value_d');
+
+        expect(hashTable.has('a')).toBeTruthy();
+        expect(hashTable.has('test')).toBeFalsy();
     });
 });
