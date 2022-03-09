@@ -1,9 +1,9 @@
-import { LinkedListNode, toStringCallbackType } from '@/data-structures/linked-list/LinkedListNode';
+import { LinkedListNode, linkedListNodeType, toStringCallbackType } from '@/data-structures/linked-list/LinkedListNode';
 import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
 export class LinkedList<T> {
-    public head: LinkedListNode<T>|null;
-    public tail: LinkedListNode<T>|null;
+    public head: linkedListNodeType<T>;
+    public tail: linkedListNodeType<T>;
     private compare: Comparator<T>;
 
     constructor(comparatorFunction?: compareFunction<T>){
@@ -110,13 +110,13 @@ export class LinkedList<T> {
      * @param {*} value 
      * @returns LinkedListNode|null
      */
-    public delete(value: T): LinkedListNode<T>|null {
+    public delete(value: T): linkedListNodeType<T> {
         // まだ値が設定されていない場合
         if(!this.head){
             return null;
         }
 
-        let deleteNode: LinkedListNode<T>|null = null;
+        let deleteNode: linkedListNodeType<T> = null;
 
         while(
             this.head &&
@@ -158,12 +158,12 @@ export class LinkedList<T> {
      * @param findObj
      * @returns LinkedListNode|null
      */
-    public find(findObj: { value?: T, callback?: (value: T) => T }): LinkedListNode<T>|null {
+    public find(findObj: { value?: T, callback?: (value: T) => boolean }): linkedListNodeType<T> {
         if(!this.head){
             return null;
         }
 
-        let currentNode = this.head;
+        let currentNode: linkedListNodeType<T> = this.head;
         const value = findObj.value ? findObj.value : undefined;
         const callback = findObj.callback ? findObj.callback : undefined;
 
@@ -182,9 +182,7 @@ export class LinkedList<T> {
                 return currentNode;
             }
 
-            if(currentNode.next){
-                currentNode = currentNode.next;
-            }
+            currentNode = currentNode.next;
         }
 
         // どの要素も一致しなかった場合
