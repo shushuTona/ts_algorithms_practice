@@ -1,3 +1,4 @@
+import type { linkedListNodeType } from '@/data-structures/linked-list/LinkedListNode';
 import { LinkedList } from '@/data-structures/linked-list/LinkedList';
 
 const defaultHashTableSize = 32;
@@ -11,13 +12,23 @@ interface HashTableLinkedListNode<T> {
     value: T
 }
 
+type bucketsType<T> = LinkedList<HashTableLinkedListNode<T>>;
+
+type findCallbackType<T> = (nodeValue: HashTableLinkedListNode<T>) => boolean;
+
 export class HashTable<T> {
-    public buckets: LinkedList<HashTableLinkedListNode<T>>[];
+    public buckets: bucketsType<T>[];
     public keys: HashTableKeys;
 
     constructor(hashTableSize = defaultHashTableSize) {
         this.buckets = Array(hashTableSize).fill(null).map(() => new LinkedList<HashTableLinkedListNode<T>>());
         this.keys = {};
+    }
+
+    public findCallback(key: string): findCallbackType<T> {
+        return (nodeValue: HashTableLinkedListNode<T>) => {
+            return nodeValue.key === key;
+        };
     }
 
     /**
@@ -49,7 +60,7 @@ export class HashTable<T> {
         const bucketLinkedList = this.buckets[keyHash];
 
         if(bucketLinkedList){
-            const node = bucketLinkedList.find({ callback: (nodeValue) => nodeValue.key === key });
+            const node = bucketLinkedList.find({ callback: this.findCallback(key) });
 
             if(
                 !node
@@ -62,11 +73,75 @@ export class HashTable<T> {
     }
 
     /**
+     * delete
+     *
+     * 
+     */
+    public delete(key: string): linkedListNodeType<HashTableLinkedListNode<T>>|null {
+        const keyHash = this.hash(key);
+        delete this.keys[key];
+        
+        const bucketLinkedList = this.buckets[keyHash];
+        if(bucketLinkedList){
+            const node = bucketLinkedList.find({ callback: this.findCallback(key) });
+
+            if(node) {
+                return bucketLinkedList.delete(node.value);
+            }
+
+            return null;
+        }
+
+        return null;
+    }
+
+    /**
+     * get
+     *
+     * 
+     */
+    public get(key: string): T|undefined {
+        const keyHash = this.hash(key);
+        const bucketLinkedList = this.buckets[keyHash];
+
+        if(bucketLinkedList){
+            const node = bucketLinkedList.find({ callback: this.findCallback(key) });
+            return node ? node.value.value : undefined;
+        }
+
+        return undefined;
+    }
+
+    /**
      * has
      *
      * 
      */
     public has(key: string) {
         return Object.hasOwnProperty.call(this.keys, key);
+    }
+
+    /**
+     * getKeys
+     *
+     *  
+     */
+    public getKeys(): string[] {
+        return Object.keys(this.keys);
+    }
+
+    /**
+     * getValues
+     *
+     * 
+     */
+    public getValues(): T[] {
+        return this.buckets.reduce((values: T[], bucket: bucketsType<T>) => {
+            const bucketValues = bucket.toArray().map((linkedListNode) => {
+                return linkedListNode.value.value;
+            });
+
+            return values.concat(bucketValues);
+        }, []);
     }
 }
