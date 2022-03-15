@@ -52,7 +52,7 @@ export class HashTable<T> {
     /**
      * set
      *
-     * 
+     * 引数のkeyとvalueを基に、新規Nodeの追加 or 既存Nodeのvalueを更新する
      */
     public set(key: string, value: T): void {
         const keyHash = this.hash(key);
@@ -75,7 +75,7 @@ export class HashTable<T> {
     /**
      * delete
      *
-     * 
+     * 引数のkeyを基に対象Nodeを一覧から削除する
      */
     public delete(key: string): linkedListNodeType<HashTableLinkedListNode<T>>|null {
         const keyHash = this.hash(key);
@@ -98,7 +98,7 @@ export class HashTable<T> {
     /**
      * get
      *
-     * 
+     * 引数のkeyを基に対象のNodeを取得する
      */
     public get(key: string): T|undefined {
         const keyHash = this.hash(key);
@@ -115,16 +115,16 @@ export class HashTable<T> {
     /**
      * has
      *
-     * 
+     * this.keysに引数のキー（文字列）がプロパティとして設定されているかを判定する
      */
-    public has(key: string) {
+    public has(key: string): boolean {
         return Object.hasOwnProperty.call(this.keys, key);
     }
 
     /**
      * getKeys
      *
-     *  
+     * this.keysのキー一覧を取得する
      */
     public getKeys(): string[] {
         return Object.keys(this.keys);
@@ -133,7 +133,7 @@ export class HashTable<T> {
     /**
      * getValues
      *
-     * 
+     * this.bucketsにそれぞれ設定されているLinkedList内の各Nodeに設定されているvalueの一覧を取得する
      */
     public getValues(): T[] {
         return this.buckets.reduce((values: T[], bucket: bucketsType<T>) => {
