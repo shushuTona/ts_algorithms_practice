@@ -1,7 +1,7 @@
 import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
 export class Heap<T> {
-    public heapContainer: number[];
+    public heapContainer: (T|undefined)[];
     public compare: Comparator<T>;
 
     constructor(compareFunction?: compareFunction<T>) {
@@ -72,7 +72,7 @@ export class Heap<T> {
      *
      * 
      */
-    public leftChild(parentIndex: number): number|undefined {
+    public leftChild(parentIndex: number): T|undefined {
         return this.heapContainer[this.getLeftChildIndex(parentIndex)];
     }
 
@@ -81,7 +81,245 @@ export class Heap<T> {
      *
      * 
      */
-    public rightChild(parentIndex: number): number|undefined {
+    public rightChild(parentIndex: number): T|undefined {
         return this.heapContainer[this.getRightChildIndex(parentIndex)];
+    }
+
+    /**
+     * rightChild
+     *
+     * 
+     */
+    public parent(childIndex: number): T|undefined {
+        return this.heapContainer[this.getParentIndex(childIndex)];
+    }
+
+    /**
+     * swap
+     *
+     * 
+     */
+    public swap(indexOne: number, indexTwo: number) {
+        const tmp = this.heapContainer[indexTwo];
+        this.heapContainer[indexTwo] = this.heapContainer[indexOne];
+        this.heapContainer[indexOne] = tmp;
+    }
+
+    /**
+     * peek
+     *
+     * 
+     */
+    public peek(): (T | undefined)|null {
+        if (
+            this.heapContainer.length === 0
+        ) {
+            return null;
+        }
+
+        return this.heapContainer[0];
+    }
+
+    /**
+     * poll
+     *
+     * 
+     */
+    public poll(): (T | undefined)|null {
+        if (
+            this.heapContainer.length === 0
+        ) {
+            return null;
+        }
+
+        if (
+            this.heapContainer.length === 1
+        ) {
+            return this.heapContainer.pop();
+        }
+
+        const item = this.heapContainer[0];
+
+        this.heapContainer[0] = this.heapContainer.pop();
+        this.heapifyDown();
+
+        return item;
+    }
+
+    /**
+     * add
+     *
+     * 
+     */
+    public add(item: T): this {
+        this.heapContainer.push(item);
+
+        this.heapifyUp();
+
+        return this;
+    }
+
+    /**
+     * remove
+     *
+     * 
+     */
+    public remove(item: T, comparator = this.compare): this {
+        const numberOfItemsToRemove = this.find(item, comparator).length;
+
+        for (let iteration = 0; iteration < numberOfItemsToRemove; iteration += 1) {
+            const indexToRemove = this.find(item, comparator).pop();
+
+            if(
+                !indexToRemove
+            ) {
+                continue;
+            }
+
+            if (
+                indexToRemove === (this.heapContainer.length - 1)
+            ) {
+                this.heapContainer.pop();
+            } else {
+                this.heapContainer[indexToRemove] = this.heapContainer.pop();
+
+                const parentItem = this.parent(indexToRemove);
+                const heapContainerItem = this.heapContainer[indexToRemove];
+
+                if (
+                    this.hasLeftChild(indexToRemove) &&
+                    heapContainerItem &&
+                    (
+                        !parentItem ||
+                        this.pairIsInCorrectOrder(parentItem, heapContainerItem)
+                    )
+                ) {
+                    this.heapifyDown(indexToRemove);
+                } else {
+                    this.heapifyUp(indexToRemove);
+                }
+            }
+        }
+
+        return this;
+    }
+
+    /**
+     * find
+     *
+     * 
+     */
+    public find(item: T, comparator = this.compare): number[] {
+        const foundItemIndices = [];
+
+        for (let itemIndex = 0; itemIndex < this.heapContainer.length; itemIndex += 1) {
+            const heapContainerItem = this.heapContainer[itemIndex];
+            if (
+                heapContainerItem &&
+                comparator.equal(item, heapContainerItem)
+            ) {
+                foundItemIndices.push(itemIndex);
+            }
+        }
+
+        return foundItemIndices;
+    }
+
+    /**
+     * isEmpty
+     *
+     * 
+     */
+    public isEmpty(): boolean {
+        return !this.heapContainer.length;
+    }
+
+    /**
+     * toString
+     *
+     * 
+     */
+    public toString(): string {
+        return this.heapContainer.toString();
+    }
+
+    /**
+     * heapifyUp
+     *
+     * 
+     */
+    public heapifyUp(customStartIndex?: number): void {
+        let currentIndex = customStartIndex || this.heapContainer.length -1;
+        let parentItem = this.parent(currentIndex);
+        let heapContainerItem = this.heapContainer[currentIndex];
+
+        while(
+            this.hasParent(currentIndex) &&
+            parentItem &&
+            heapContainerItem &&
+            !this.pairIsInCorrectOrder(parentItem, heapContainerItem)
+        ) {
+            this.swap(currentIndex, this.getParentIndex(currentIndex));
+
+            currentIndex = this.getParentIndex(currentIndex);
+            parentItem = this.parent(currentIndex);
+            heapContainerItem = this.heapContainer[currentIndex];
+        }
+    }
+
+    /**
+     * heapifyDown
+     *
+     * 
+     */
+    public heapifyDown(customStartIndex = 0): void {
+        let currentIndex = customStartIndex;
+        let nextIndex = null;
+        let rightItem = this.rightChild(currentIndex);
+        let leftItem = this.leftChild(currentIndex);
+
+        while(
+            this.hasLeftChild(currentIndex)
+        ) {
+            if(
+                this.hasRightChild(currentIndex) &&
+                rightItem &&
+                leftItem &&
+                this.pairIsInCorrectOrder(rightItem, leftItem)
+            ) {
+                nextIndex = this.getRightChildIndex(currentIndex);
+            } else {
+                nextIndex = this.getLeftChildIndex(currentIndex);
+            }
+
+            const currentIndexItem = this.heapContainer[currentIndex];
+            const nextIndexItem = this.heapContainer[nextIndex];
+
+            if(
+                currentIndexItem &&
+                nextIndexItem &&
+                this.pairIsInCorrectOrder(currentIndexItem, nextIndexItem)
+            ) {
+                break;
+            }
+
+            this.swap(currentIndex, nextIndex);
+
+            currentIndex = nextIndex;
+            rightItem = this.rightChild(currentIndex);
+            leftItem = this.leftChild(currentIndex);
+        }
+    }
+
+    /**
+     * pairIsInCorrectOrder
+     *
+     * 
+     */
+    public pairIsInCorrectOrder(firstItem: T, secondItem: T): never {
+        throw new Error(`
+            You have to implement heap pair comparision method
+            for ${firstItem} and ${secondItem} values.
+        `);
     }
 }

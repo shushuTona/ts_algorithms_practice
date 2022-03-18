@@ -7,3 +7,83 @@
 - XXX
 - XXX
 - XXX
+- getLeftChildIndex
+    - XXX
+    - XXX
+    - XXX
+- getRightChildIndex
+    - XXX
+    - XXX
+    - XXX
+- getParentIndex
+    - XXX
+    - XXX
+    - XXX
+- hasParent
+    - XXX
+    - XXX
+    - XXX
+- hasLeftChild
+    - XXX
+    - XXX
+    - XXX
+- hasRightChild
+    - XXX
+    - XXX
+    - XXX
+- leftChild
+    - XXX
+    - XXX
+    - XXX
+- rightChild
+    - XXX
+    - XXX
+    - XXX
+- parent
+    - XXX
+    - XXX
+    - XXX
+- swap
+    - XXX
+    - XXX
+    - XXX
+- peek
+    - XXX
+    - XXX
+    - XXX
+- poll
+    - XXX
+    - XXX
+    - XXX
+- add
+    - XXX
+    - XXX
+    - XXX
+- remove
+    - XXX
+    - XXX
+    - XXX
+- find
+    - XXX
+    - XXX
+    - XXX
+- isEmpty
+    - XXX
+    - XXX
+    - XXX
+- toString
+    - XXX
+    - XXX
+    - XXX
+- heapifyUp
+    - XXX
+    - XXX
+    - XXX
+- heapifyDown
+    - XXX
+    - XXX
+    - XXX
+- pairIsInCorrectOrder
+    - XXX
+    - XXX
+    - XXX
