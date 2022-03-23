@@ -16,7 +16,7 @@ export class Heap<T> {
     /**
      * getLeftChildIndex
      *
-     *  
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeが持つツリーの左側の子Nodeのindex番号を取得する
      */
     public getLeftChildIndex(parentIndex: number): number {
         return (2 * parentIndex) + 1;
@@ -25,7 +25,7 @@ export class Heap<T> {
     /**
      * getRightChildIndex
      *
-     *  
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeが持つツリーの右側の子Nodeのindex番号を取得する
      */
     public getRightChildIndex(parentIndex: number): number {
         return (2 * parentIndex) + 2;
@@ -34,7 +34,8 @@ export class Heap<T> {
     /**
      * getParentIndex
      *
-     *  
+     * 引数で指定したindex番号（childIndex）を基に、親Nodeのindex番号を取得する
+     * ※ 引数に0（ルートノードのindex番号）を指定した場合、戻り値は-1になる
      */
     public getParentIndex(childIndex: number): number {
         return Math.floor((childIndex - 1) / 2);
@@ -43,7 +44,7 @@ export class Heap<T> {
     /**
      * hasParent
      *
-     *  
+     * 引数で指定したindex番号（childIndex）を基に、親Nodeが存在するか判定する
      */
     public hasParent(childIndex: number): boolean {
         return this.getParentIndex(childIndex) >= 0;
@@ -52,7 +53,7 @@ export class Heap<T> {
     /**
      * hasLeftChild
      *
-     * 
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeの子Nodeとして左側にNodeが存在するか判定する
      */
     public hasLeftChild(parentIndex: number): boolean {
         return this.getLeftChildIndex(parentIndex) < this.heapContainer.length;
@@ -61,7 +62,7 @@ export class Heap<T> {
     /**
      * hasRightChild
      *
-     * 
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeの子Nodeとして右側にNodeが存在するか判定する
      */
     public hasRightChild(parentIndex: number): boolean {
         return this.getRightChildIndex(parentIndex) < this.heapContainer.length;
@@ -70,7 +71,7 @@ export class Heap<T> {
     /**
      * leftChild
      *
-     * 
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeの左側の子Nodeを取得する
      */
     public leftChild(parentIndex: number): T|undefined {
         return this.heapContainer[this.getLeftChildIndex(parentIndex)];
@@ -79,16 +80,16 @@ export class Heap<T> {
     /**
      * rightChild
      *
-     * 
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeの右側の子Nodeを取得する
      */
     public rightChild(parentIndex: number): T|undefined {
         return this.heapContainer[this.getRightChildIndex(parentIndex)];
     }
 
     /**
-     * rightChild
+     * parent
      *
-     * 
+     * 引数で指定したindex番号（parentIndex）を基に、そのNodeの親Nodeを取得する
      */
     public parent(childIndex: number): T|undefined {
         return this.heapContainer[this.getParentIndex(childIndex)];

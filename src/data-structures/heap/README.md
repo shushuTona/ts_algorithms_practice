@@ -4,45 +4,37 @@
 
 ### Heap
 
-- XXX
-- XXX
-- XXX
+- HeapからそのままInstanceは生成できない（= Heapを継承したClassからInstanceを生成する）
+- 1つの親Nodeに対して、2つの子Nodeが紐づけられる（二分木として表現される木構造？）
+- `heapContainer`は値を管理する配列（最初は空）
+- `compare`は`Comparator Class`のインスタンス
 - getLeftChildIndex
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）を2倍して、1プラスした数値を戻り値とする関数
+    - 対象Nodeの左側の子Nodeのindex番号を取得する
 - getRightChildIndex
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）を2倍して、2プラスした数値を戻り値とする関数
+    - 対象Nodeの右側の子Nodeのindex番号を取得する
 - getParentIndex
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`childIndex`）を基に、親Nodeのindex番号を取得する
+    - 引数として `0` = `ルートノードのindex番号` を指定すると、式が `Math.floor((0-1)/2)` になるので、戻り値は `-1` になる
 - hasParent
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`childIndex`）を基に、対象のindex番号のNodeに親Nodeが存在するか判定する
+    - `getParentIndex`の処理結果を基にした真偽値取得
 - hasLeftChild
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）に対応するNodeの左側の子Nodeが存在するか判定する
+    - `getLeftChildIndex`の処理結果を基にした真偽値取得
 - hasRightChild
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）に対応するNodeの右側の子Nodeが存在するか判定する
+    - `getRightChildIndex`の処理結果を基にした真偽値取得
 - leftChild
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）に対応するNodeの左側の子Nodeを取得する
+    - `getLeftChildIndex`を基に対象の子Nodeのindex番号を取得して、`heapContainer`から要素取得
 - rightChild
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`parentIndex`）に対応するNodeの右側の子Nodeを取得する
+    - `getRightChildIndex`を基に対象の子Nodeのindex番号を取得して、`heapContainer`から要素取得
 - parent
-    - XXX
-    - XXX
-    - XXX
+    - 引数の数値（`childIndex`）に対応するNodeの親Nodeを取得する
+    - `getParentIndex`を基に対象の子Nodeのindex番号を取得して、`heapContainer`から要素取得
 - swap
     - XXX
     - XXX
