@@ -98,7 +98,7 @@ export class Heap<T> {
     /**
      * swap
      *
-     * 
+     * 引数の2つのindex番号を基に、各index番号に対応する2つのNodeの位置を変更する
      */
     public swap(indexOne: number, indexTwo: number) {
         const tmp = this.heapContainer[indexTwo];
@@ -109,7 +109,7 @@ export class Heap<T> {
     /**
      * peek
      *
-     * 
+     * ルートノードの値を取得する
      */
     public peek(): (T | undefined)|null {
         if (
@@ -124,7 +124,7 @@ export class Heap<T> {
     /**
      * poll
      *
-     * 
+     * heapContainer内の最後のNodeをルートノードに設定する
      */
     public poll(): (T | undefined)|null {
         if (
@@ -150,7 +150,7 @@ export class Heap<T> {
     /**
      * add
      *
-     * 
+     * 引数で指定したitemをheapContainerに追加する
      */
     public add(item: T): this {
         this.heapContainer.push(item);
@@ -168,6 +168,7 @@ export class Heap<T> {
     public remove(item: T, comparator = this.compare): this {
         const numberOfItemsToRemove = this.find(item, comparator).length;
 
+        // findの取得結果の要素数分（＝取得対象の個数分）繰り返し処理を実行する
         for (let iteration = 0; iteration < numberOfItemsToRemove; iteration += 1) {
             const indexToRemove = this.find(item, comparator).pop();
 
@@ -182,6 +183,7 @@ export class Heap<T> {
             ) {
                 this.heapContainer.pop();
             } else {
+                // heapContainerの最後のNodeを削除対象の位置に移動する
                 this.heapContainer[indexToRemove] = this.heapContainer.pop();
 
                 const parentItem = this.parent(indexToRemove);
@@ -208,7 +210,7 @@ export class Heap<T> {
     /**
      * find
      *
-     * 
+     * 引数の値と一致するNodeのindex番号を追加した配列を取得する
      */
     public find(item: T, comparator = this.compare): number[] {
         const foundItemIndices = [];
@@ -229,7 +231,7 @@ export class Heap<T> {
     /**
      * isEmpty
      *
-     * 
+     * heapContainerに要素が存在するかを判定する
      */
     public isEmpty(): boolean {
         return !this.heapContainer.length;
@@ -238,7 +240,7 @@ export class Heap<T> {
     /**
      * toString
      *
-     * 
+     * heapContainerを文字列化する
      */
     public toString(): string {
         return this.heapContainer.toString();

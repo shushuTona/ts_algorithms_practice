@@ -36,37 +36,27 @@
     - 引数の数値（`childIndex`）に対応するNodeの親Nodeを取得する
     - `getParentIndex`を基に対象の子Nodeのindex番号を取得して、`heapContainer`から要素取得
 - swap
-    - XXX
-    - XXX
-    - XXX
+    - 引数の2つのindex番号を基に、各index番号に対応する2つのNodeの位置を変更する
 - peek
-    - XXX
-    - XXX
-    - XXX
+    - ルートノードの値を取得する
+    - `heapContainer`に要素が存在しない場合は`null`が戻り値になる
 - poll
-    - XXX
-    - XXX
-    - XXX
+    - `heapContainer`内の最後のNodeをルートノードに設定する
+    - `heapContainer`に対して`pop`を実行して、削除＆追加Nodeの取得をしている
+    - `heapifyDown`は今のところ謎
 - add
-    - XXX
-    - XXX
-    - XXX
+    - 引数で指定した値を`heapContainer`に`push`で追加する
+    - `heapifyUp`は今のところ謎
 - remove
     - XXX
     - XXX
     - XXX
 - find
-    - XXX
-    - XXX
-    - XXX
+    - 引数の値と一致するNodeのindex番号を追加した配列を取得する
 - isEmpty
-    - XXX
-    - XXX
-    - XXX
+    - `heapContainer`に要素が存在するかを判定する
 - toString
-    - XXX
-    - XXX
-    - XXX
+    - `heapContainer`（Array）を`toString`で文字列化する
 - heapifyUp
     - XXX
     - XXX
