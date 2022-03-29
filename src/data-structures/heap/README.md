@@ -58,14 +58,13 @@
 - toString
     - `heapContainer`（Array）を`toString`で文字列化する
 - heapifyUp
-    - XXX
-    - XXX
-    - XXX
+    - 対象Nodeとその親Nodeの値を比較して、pairIsInCorrectOrderの結果によって子Nodeと親Nodeの値を入れ替える
+        - MaxHeapの場合：ルートNodeが最大値になるように値を入れ替えていく
+        - MaxHeapの場合：ルートNodeが最小値になるように値を入れ替えていく
 - heapifyDown
     - XXX
     - XXX
     - XXX
 - pairIsInCorrectOrder
-    - XXX
-    - XXX
-    - XXX
+    - 継承先のClassで上書きするメソッド
+    - 上書きをしないで実行するとエラーが発生するようになっている

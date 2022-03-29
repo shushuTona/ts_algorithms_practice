@@ -249,7 +249,11 @@ export class Heap<T> {
     /**
      * heapifyUp
      *
+     * 対象Nodeとその親Nodeの値を比較して、pairIsInCorrectOrderの結果によって子Nodeと親Nodeの値を入れ替える
+     * 上記処理を必要であればルートNodeまで繰り返す
      * 
+     * MaxHeapの場合：ルートNodeが最大値になるように値を入れ替えていく
+     * MaxHeapの場合：ルートNodeが最小値になるように値を入れ替えていく
      */
     public heapifyUp(customStartIndex?: number): void {
         let currentIndex = customStartIndex || this.heapContainer.length -1;
