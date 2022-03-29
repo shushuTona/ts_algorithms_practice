@@ -319,7 +319,7 @@ export class Heap<T> {
      *
      * 
      */
-    public pairIsInCorrectOrder(firstItem: T, secondItem: T): never {
+    public pairIsInCorrectOrder(firstItem: T, secondItem: T): boolean {
         throw new Error(`
             You have to implement heap pair comparision method
             for ${firstItem} and ${secondItem} values.
