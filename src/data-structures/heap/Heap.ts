@@ -100,7 +100,7 @@ export class Heap<T> {
      *
      * 引数の2つのindex番号を基に、各index番号に対応する2つのNodeの位置を変更する
      */
-    public swap(indexOne: number, indexTwo: number) {
+    public swap(indexOne: number, indexTwo: number): void {
         const tmp = this.heapContainer[indexTwo];
         this.heapContainer[indexTwo] = this.heapContainer[indexOne];
         this.heapContainer[indexOne] = tmp;
@@ -124,7 +124,7 @@ export class Heap<T> {
     /**
      * poll
      *
-     * heapContainer内の最後のNodeをルートノードに設定する
+     * heapContainer内の最後のNodeをルートノードに設定＆元々のルートノードは削除する
      */
     public poll(): (T | undefined)|null {
         if (
@@ -141,6 +141,7 @@ export class Heap<T> {
 
         const item = this.heapContainer[0];
 
+        // 最後のNodeをルートNodeに設定する
         this.heapContainer[0] = this.heapContainer.pop();
         this.heapifyDown();
 
@@ -321,7 +322,8 @@ export class Heap<T> {
     /**
      * pairIsInCorrectOrder
      *
-     * 
+     * 継承先のClassで上書きするメソッド
+     * 上書きしないで実行した際にエラーを発生させる
      */
     public pairIsInCorrectOrder(firstItem: T, secondItem: T): boolean {
         throw new Error(`
