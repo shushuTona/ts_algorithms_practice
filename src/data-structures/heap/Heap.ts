@@ -164,13 +164,14 @@ export class Heap<T> {
     /**
      * remove
      *
-     * 
+     * heapContainerからitemで指定した値を削除＆削除後に都度heapContainer内のNode位置をHeapのルールに沿って調整する
      */
     public remove(item: T, comparator = this.compare): this {
         const numberOfItemsToRemove = this.find(item, comparator).length;
 
         // findの取得結果の要素数分（＝取得対象の個数分）繰り返し処理を実行する
         for (let iteration = 0; iteration < numberOfItemsToRemove; iteration += 1) {
+            // this.heapContainer内の削除対象のindex
             const indexToRemove = this.find(item, comparator).pop();
 
             if(
@@ -180,6 +181,7 @@ export class Heap<T> {
             }
 
             if (
+                // 削除対象が最後のNodeの場合
                 indexToRemove === (this.heapContainer.length - 1)
             ) {
                 this.heapContainer.pop();
@@ -187,13 +189,18 @@ export class Heap<T> {
                 // heapContainerの最後のNodeを削除対象の位置に移動する
                 this.heapContainer[indexToRemove] = this.heapContainer.pop();
 
+                // 削除対象位置にあるNodeの親Node
                 const parentItem = this.parent(indexToRemove);
-                const heapContainerItem = this.heapContainer[indexToRemove];
 
+                // 削除対象位置にあるNode
+                const heapContainerItem = this.heapContainer[indexToRemove];
+                
                 if (
+                    // 削除対象位置にあるNodeが左側の子Nodeを持っているか
                     this.hasLeftChild(indexToRemove) &&
                     heapContainerItem &&
                     (
+                        // 親Nodeが存在しない or 親Nodeと対象Nodeの比較結果がtrue
                         !parentItem ||
                         this.pairIsInCorrectOrder(parentItem, heapContainerItem)
                     )
@@ -288,7 +295,7 @@ export class Heap<T> {
         let leftItem = this.leftChild(currentIndex);
 
         while(
-            // 対象Nodeが左側の子Nodeを持っているか
+            // 対象Nodeが左側の子Nodeを持っているか（左から子Nodeが設定されるから左側を判定している？）
             this.hasLeftChild(currentIndex)
         ) {
             if(

@@ -48,9 +48,7 @@
     - 引数で指定した値を`heapContainer`に`push`で追加する
     - `heapifyUp`は今のところ謎
 - remove
-    - XXX
-    - XXX
-    - XXX
+    - `heapContainer`からitemで指定した値を削除＆削除後に都度`heapContainer`内のNode位置をHeapのルールに沿って調整する
 - find
     - 引数の値と一致するNodeのindex番号を追加した配列を取得する
 - isEmpty
