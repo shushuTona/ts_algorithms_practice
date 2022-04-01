@@ -61,7 +61,7 @@ export class Comparator<T> {
     }
 
     /**
-     * 引数aとbを比較して、aの方が大きい or aとbが同値かを判定
+     * 引数aとbを比較して、aの方が大きい or aとbが同値の場合true, aよりbの方が大きい場合falseを返却する
      */
     public greaterThanOrEqual(a: T, b: T): boolean {
         return this.greaterThan(a, b) || this.equal(a, b);
