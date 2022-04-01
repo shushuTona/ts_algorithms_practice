@@ -152,7 +152,7 @@ describe('MaxHeap class test', () => {
         expect(maxHeap.toString()).toBe('5,4,2,1,3');
 
         const item = maxHeap.poll();
-        
+
         expect(item).toBe(5);
         expect(maxHeap.toString()).toBe('4,3,2,1');
     });
@@ -162,13 +162,13 @@ describe('MaxHeap class test', () => {
 
         maxHeap.add(1);
         expect(maxHeap.toString()).toBe('1');
-        
+
         maxHeap.add(2);
         expect(maxHeap.toString()).toBe('2,1');
-        
+
         maxHeap.add(3);
         expect(maxHeap.toString()).toBe('3,1,2');
-        
+
         maxHeap.add(4);
         expect(maxHeap.toString()).toBe('4,3,2,1');
 
@@ -185,10 +185,10 @@ describe('MaxHeap class test', () => {
         maxHeap.add(4);
         maxHeap.add(5);
         expect(maxHeap.toString()).toBe('5,4,2,1,3');
-        
+
         maxHeap.remove(3);
         expect(maxHeap.toString()).toBe('5,4,2,1');
-        
+
         maxHeap.add(3);
         maxHeap.add(2);
         maxHeap.add(1);
@@ -216,9 +216,9 @@ describe('MaxHeap class test', () => {
         const maxHeap = new MaxHeap<number>();
 
         expect(maxHeap.isEmpty()).toBe(true);
-        
+
         maxHeap.add(1);
-        
+
         expect(maxHeap.isEmpty()).toBe(false);
     });
 
@@ -226,11 +226,11 @@ describe('MaxHeap class test', () => {
         const maxHeap = new MaxHeap<number>();
 
         expect(maxHeap.toString()).toBe('');
-        
+
         maxHeap.add(1);
         maxHeap.add(2);
         maxHeap.add(3);
-        
+
         expect(maxHeap.toString()).toBe('3,1,2');
     });
 

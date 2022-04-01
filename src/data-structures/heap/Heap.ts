@@ -278,7 +278,8 @@ export class Heap<T> {
     /**
      * heapifyDown
      *
-     * 
+     * 対象indexのNodeとそのNodeの子Nodeを比較して、子Nodeの方が値が大きい場合、一覧内の位置を入れ替える
+     * 上記をその子Nodeまで行う
      */
     public heapifyDown(customStartIndex = 0): void {
         let currentIndex = customStartIndex;
@@ -287,32 +288,44 @@ export class Heap<T> {
         let leftItem = this.leftChild(currentIndex);
 
         while(
+            // 対象Nodeが左側の子Nodeを持っているか
             this.hasLeftChild(currentIndex)
         ) {
             if(
+                // 対象Nodeが右側の子Nodeを持っているか
                 this.hasRightChild(currentIndex) &&
                 rightItem &&
                 leftItem &&
+
+                // rightItem >= leftItemが成立する場合true
                 this.pairIsInCorrectOrder(rightItem, leftItem)
             ) {
+                // 対象Nodeの右側の子Nodeのindexを取得
                 nextIndex = this.getRightChildIndex(currentIndex);
             } else {
+                // 対象Nodeの左側の子Nodeのindexを取得
                 nextIndex = this.getLeftChildIndex(currentIndex);
             }
 
+            // 親Nodeの値と右側or左側の子Nodeの値
             const currentIndexItem = this.heapContainer[currentIndex];
             const nextIndexItem = this.heapContainer[nextIndex];
 
             if(
                 currentIndexItem &&
                 nextIndexItem &&
+                // 親Nodeの値 >= 子Nodeの値が成立する場合true
                 this.pairIsInCorrectOrder(currentIndexItem, nextIndexItem)
             ) {
                 break;
             }
 
+            // ▼▼▼▼▼ 親Nodeの値 < 子Nodeの値が成立する ▼▼▼▼▼
+
+            // 親Nodeの値 と 子Nodeの値 の位置を切り替える
             this.swap(currentIndex, nextIndex);
 
+            // currentIndexに子Nodeのindexを設定
             currentIndex = nextIndex;
             rightItem = this.rightChild(currentIndex);
             leftItem = this.leftChild(currentIndex);

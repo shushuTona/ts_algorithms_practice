@@ -62,9 +62,9 @@
         - MaxHeapの場合：ルートNodeが最大値になるように値を入れ替えていく
         - MaxHeapの場合：ルートNodeが最小値になるように値を入れ替えていく
 - heapifyDown
-    - XXX
-    - XXX
-    - XXX
+    - 対象Nodeとその子Nodeの値を比較して、pairIsInCorrectOrderの結果によって親Nodeと子Nodeの値を入れ替える
+        - MaxHeapの場合：対象Indexとその子を比較して、子Nodeの方が大きい場合、親Nodeと子Nodeの位置を入れ替える
+        - MaxHeapの場合：
 - pairIsInCorrectOrder
     - 継承先のClassで上書きするメソッド
     - 上書きをしないで実行するとエラーが発生するようになっている
