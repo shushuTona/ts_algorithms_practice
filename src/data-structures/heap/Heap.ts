@@ -175,7 +175,7 @@ export class Heap<T> {
             const indexToRemove = this.find(item, comparator).pop();
 
             if(
-                !indexToRemove
+                indexToRemove === undefined
             ) {
                 continue;
             }
