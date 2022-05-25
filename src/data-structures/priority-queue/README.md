@@ -4,6 +4,4 @@
 
 ### PriorityQueue
 
-- XXX
-- XXX
-- XXX
+- Queueの一覧管理はMinHeapを継承して、その一覧管理操作にMapを基にした優先度付けを行う

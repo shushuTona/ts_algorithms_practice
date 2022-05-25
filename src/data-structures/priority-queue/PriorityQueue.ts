@@ -13,6 +13,13 @@ export class PriorityQueue<T> extends MinHeap<T> {
         this.compare = new Comparator<T>(func);
     }
 
+    /**
+     * 対象データと優先度を基に、prioritiesに追加する
+     *
+     * @param item 
+     * @param priority 
+     * @returns 
+     */
     public add(item: T, priority = 0): this {
         this.priorities.set(item, priority);
 
@@ -21,6 +28,13 @@ export class PriorityQueue<T> extends MinHeap<T> {
         return this;
     }
 
+    /**
+     * 一覧に保存されている対象データを削除する
+     *
+     * @param item 
+     * @param customFindingComparator 
+     * @returns 
+     */
     public remove(item: T, customFindingComparator: Comparator<T>): this {
         super.remove(item, customFindingComparator);
 
@@ -29,6 +43,13 @@ export class PriorityQueue<T> extends MinHeap<T> {
         return this;
     }
 
+    /**
+     * XXX
+     *
+     * @param item 
+     * @param priority 
+     * @returns 
+     */
     public changepriorty(item: T, priority: number): this {
         this.remove(item, new Comparator(this.compareValue));
 
@@ -37,15 +58,34 @@ export class PriorityQueue<T> extends MinHeap<T> {
         return this;
     }
 
-    public findByValue(item: T): number[] {
+    /**
+     * heapContainer内の対象データのindex番号一覧を取得する
+     *
+     * @param item 
+     * @returns 
+     */
+    private findByValue(item: T): number[] {
         return this.find(item, new Comparator(this.compareValue));
     }
 
+    /**
+     * 対象データが一覧に存在するか判定する
+     *
+     * @param item 
+     * @returns 
+     */
     public hasValue(item: T): boolean {
         return this.findByValue(item).length > 0;
     }
 
-    public comparePriority(a: T, b: T): number {
+    /**
+     * 対象データAとBの優先度を比較する
+     *
+     * @param a 
+     * @param b 
+     * @returns 
+     */
+    private comparePriority(a: T, b: T): number {
         const itemA = this.priorities.get(a);
         const itemB = this.priorities.get(b);
 
@@ -62,7 +102,14 @@ export class PriorityQueue<T> extends MinHeap<T> {
         return itemA < itemB ? -1 : 1;
     }
 
-    public compareValue(a: T, b: T): number {
+    /**
+     * 対象データAとBの値を比較する
+     *
+     * @param a 
+     * @param b 
+     * @returns 
+     */
+    private compareValue(a: T, b: T): number {
         if(
             a === b ||
             (
