@@ -1,6 +1,6 @@
 import { Comparator, compareFunction } from '@/utils/comparator/Comparator';
 
-const linearSearch = <T>(list: T[], seekElem: T, comparatorCallback: compareFunction<T>): number[] => {
+const linearSearch = <T>(list: T[], seekElem: T, comparatorCallback?: compareFunction<T>): number[] => {
     const comparator = new Comparator<T>(comparatorCallback);
     const foundIndexList: number[] = [];
 
