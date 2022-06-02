@@ -3,4 +3,6 @@ services:
   app:
     container_name: app
     build: .
+    volumes:
+      - ./:/ts_algorithms_practice
     tty: true
