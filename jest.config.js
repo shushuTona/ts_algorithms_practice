@@ -8,6 +8,6 @@ module.exports = {
     },
     testEnvironment: 'node',
     moduleNameMapper: {
-        '^@/(.*)$': '/var/ts_algorithms_practice/src/$1',
+        "^@/(.*)$": "<rootDir>/src/$1",
     },
 };
