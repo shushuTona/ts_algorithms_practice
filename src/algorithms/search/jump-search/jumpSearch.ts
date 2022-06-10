@@ -18,14 +18,17 @@ const jumpSearch = <T>(sortedArray: T[], seekElement: T, comparatorCallback?: co
     // seekElementよりもsortedArrayの値の方が大きくなるまでblockEndを加算していく
     let blockStart = 0;
     let blockEnd = jumpSize;
+    let sortedArrayElement = sortedArray[Math.min(blockEnd, arraySize) - 1];
     while(
+        sortedArrayElement &&
         comparator.greaterThan(
                         seekElement,
-                        sortedArray[Math.min(blockEnd, arraySize) - 1]
+                        sortedArrayElement
                     )
     ) {
         blockStart = blockEnd;
         blockEnd += jumpSize;
+        sortedArrayElement = sortedArray[Math.min(blockEnd, arraySize) - 1];
 
         // 次の探索対象が配列の要素数よりも大きかった場合、処理を終了する
         if(
@@ -40,8 +43,10 @@ const jumpSearch = <T>(sortedArray: T[], seekElement: T, comparatorCallback?: co
     while(
         currentIndex < Math.min(blockEnd, arraySize)
     ) {
+        const sortedArrayElement = sortedArray[currentIndex];
         if(
-            comparator.equal(sortedArray[currentIndex], seekElement)
+            sortedArrayElement &&
+            comparator.equal(sortedArrayElement, seekElement)
         ) {
             return currentIndex;
         }
