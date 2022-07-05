@@ -5,14 +5,15 @@ const interpolationSearch = (sortedArray: number[], seekElement: number) => {
     let rightElement = sortedArray[rightIndex];
     let leftElement = sortedArray[leftIndex];
     while(
-        leftIndex <= rightIndex &&
         rightElement &&
-        leftElement
+        leftElement &&
+        leftIndex <= rightIndex
     ) {
         const rangeDelta = rightElement - leftElement;
         const indexDelta = rightElement - leftElement;
         const valueDelta = seekElement - leftElement;
 
+        // 探索対象の値が探索対象範囲の最小値よりも小さい場合
         if(
             valueDelta < 0
         ){
