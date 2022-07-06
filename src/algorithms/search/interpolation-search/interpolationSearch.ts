@@ -23,7 +23,7 @@ const interpolationSearch = (sortedArray: number[], seekElement: number) => {
         if(
             !rangeDelta
         ) {
-            return leftElement === seekElement ? leftElement : -1;
+            return leftElement === seekElement ? leftIndex : -1;
         }
 
         const middleIndex = leftIndex + Math.floor((valueDelta * indexDelta) / rangeDelta);
