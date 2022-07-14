@@ -1,8 +1,8 @@
 import { Comparator, compareFunction } from "@/utils/comparator/Comparator";
 
 interface originalCallbacksInterface<T> {
-    compareCallback?: compareFunction<T>
-    visitingCallback?: () => {}
+    compareCallback: compareFunction<T>
+    visitingCallback: (item: T) => {}
 }
 
 class Sort<T> {
@@ -10,12 +10,12 @@ class Sort<T> {
     public comparator: Comparator<T>;
 
     constructor(originalCallbacks?: originalCallbacksInterface<T>) {
-        this.callbacks = Sort.initSortingCallbacks(originalCallbacks);
+        this.callbacks = Sort.initSortingCallbacks<T>(originalCallbacks);
         this.comparator = new Comparator(this.callbacks.compareCallback);
     }
 
-    static initSortingCallbacks(originalCallbacks?: originalCallbacksInterface<any>): originalCallbacksInterface<any> {
-        const callbacks = originalCallbacks || {};
+    static initSortingCallbacks<U>(originalCallbacks?: originalCallbacksInterface<U>): originalCallbacksInterface<U> {
+        const callbacks = originalCallbacks || {} as originalCallbacksInterface<U>;
         const stubCallback = () => { return {} };
 
         callbacks.compareCallback = callbacks.compareCallback || undefined;
@@ -24,9 +24,9 @@ class Sort<T> {
         return callbacks;
     }
 
-    sort() {
+    sort(originalArray: T[]) {
         throw new Error('sort method must be implemented');
     }
 }
 
-export default Sort;
+export { Sort };
