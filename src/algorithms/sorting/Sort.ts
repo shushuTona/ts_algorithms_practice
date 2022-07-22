@@ -1,8 +1,8 @@
 import { Comparator, compareFunction } from "@/utils/comparator/Comparator";
 
 interface originalCallbacksInterface<T> {
-    compareCallback: compareFunction<T>
-    visitingCallback: (item: T) => {}
+    compareCallback?: compareFunction<T>
+    visitingCallback?: (item: T) => {}
 }
 
 class Sort<T> {
@@ -29,4 +29,4 @@ class Sort<T> {
     }
 }
 
-export { Sort };
+export { Sort, originalCallbacksInterface };
