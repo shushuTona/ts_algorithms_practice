@@ -7,22 +7,23 @@ class BubbleSort<T> extends Sort<T> {
         // 処理の中で配列要素の配置変更が発生する為、加工用の配列を作成する
         const array = [...originalArray];
 
-        for (let i = 0; i < array.length; i++) {
+        for (let i = 1; i < array.length; i++) {
             swapped = false;
 
             const item = array[i];
-            if(item) this.callbacks.visitingCallback(item);
+            if(item && this.callbacks.visitingCallback) this.callbacks.visitingCallback(item);
 
             for (let j = 0; j < array.length - i; j++) {
                 const item = array[j];
-                if(item) this.callbacks.visitingCallback(item);
+                if(item && this.callbacks.visitingCallback) this.callbacks.visitingCallback(item);
 
                 // currentItemとnextItemを比較して、currentItemの方が値が大きいかを判定
                 const nextItem = array[j + 1];
                 const currentItem = array[j];
+
                 if(
-                    nextItem &&
-                    currentItem &&
+                    nextItem !== undefined &&
+                    currentItem !== undefined &&
                     this.comparator.lessthan(nextItem, currentItem)
                 ) {
                     // currentItemがnextItemより値が大きい場合、配列内の位置を入れ替える

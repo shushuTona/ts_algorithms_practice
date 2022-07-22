@@ -25,6 +25,8 @@ class Sort<T> {
     }
 
     sort(originalArray: T[]) {
+        console.log(originalArray);
+
         throw new Error('sort method must be implemented');
     }
 }
