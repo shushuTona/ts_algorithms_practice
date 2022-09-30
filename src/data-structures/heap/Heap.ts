@@ -270,8 +270,8 @@ export class Heap<T> {
 
         while(
             this.hasParent(currentIndex) &&
-            parentItem &&
-            heapContainerItem &&
+            parentItem !== undefined &&
+            heapContainerItem !== undefined &&
             !this.pairIsInCorrectOrder(parentItem, heapContainerItem)
         ) {
             this.swap(currentIndex, this.getParentIndex(currentIndex));
@@ -301,8 +301,8 @@ export class Heap<T> {
             if(
                 // 対象Nodeが右側の子Nodeを持っているか
                 this.hasRightChild(currentIndex) &&
-                rightItem &&
-                leftItem &&
+                rightItem !== undefined &&
+                leftItem !== undefined &&
 
                 // rightItem >= leftItemが成立する場合true
                 this.pairIsInCorrectOrder(rightItem, leftItem)
@@ -319,8 +319,8 @@ export class Heap<T> {
             const nextIndexItem = this.heapContainer[nextIndex];
 
             if(
-                currentIndexItem &&
-                nextIndexItem &&
+                currentIndexItem !== undefined &&
+                nextIndexItem !== undefined &&
                 // 親Nodeの値 >= 子Nodeの値が成立する場合true
                 this.pairIsInCorrectOrder(currentIndexItem, nextIndexItem)
             ) {
