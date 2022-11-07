@@ -45,7 +45,7 @@ class QuickSortInPlace<T> extends Sort<T> {
 
     swap(originalArray: T[], leftIndex: number, rightIndex: number) {
         const leftElement = originalArray[leftIndex];
-        const rightElement = originalArray[leftIndex];
+        const rightElement = originalArray[rightIndex];
         if(
             leftElement !== undefined &&
             rightElement !== undefined
